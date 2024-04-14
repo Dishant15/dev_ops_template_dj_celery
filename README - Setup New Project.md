@@ -46,3 +46,7 @@ copy django apps in project_name directory
 
 - rename all occurances in vs code find and replace
 - rename project dir folder name
+
+## Other extra stuff
+
+- check out this answer to manage log limits and logger rotation of docker : https://stackoverflow.com/a/57679944/2656359
