@@ -11,3 +11,12 @@ async def websocket_application(scope, receive, send):
         if event["type"] == "websocket.receive":
             if event["text"] == "ping":
                 await send({"type": "websocket.send", "text": "pong!"})
+
+
+"""
+Testing websocket with simple frontend js code:
+
+ws = new WebSocket('ws://localhost:8000/')
+ws.onmessage = (data) => console.log(data.data)
+# ws.send("ping")
+"""

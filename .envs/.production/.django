@@ -1,0 +1,42 @@
+# General
+# ------------------------------------------------------------------------------
+# DJANGO_READ_DOT_ENV_FILE=True
+DJANGO_SETTINGS_MODULE=config.settings.production
+DJANGO_SECRET_KEY=mHiDnf0ZLBG6TKl8hpn8xI8p03hMvPLT6RlHUzjEtCstvTBKB0FYGLm0hIUpAc7J
+DJANGO_ADMIN_URL=v2aF2xcliI1zyjqqrUy8pfv00xlkI7KQ/
+DJANGO_ALLOWED_HOSTS=*
+
+# Security
+# ------------------------------------------------------------------------------
+# TIP: better off using DNS, however, redirect is OK too
+DJANGO_SECURE_SSL_REDIRECT=False
+DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False
+DJANGO_SECURE_HSTS_PRELOAD=False
+DJANGO_SESSION_COOKIE_SECURE=False
+DJANGO_CSRF_COOKIE_SECURE=False
+
+# Email
+# ------------------------------------------------------------------------------
+DJANGO_SERVER_EMAIL=
+
+
+# django-allauth
+# ------------------------------------------------------------------------------
+DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
+
+# Gunicorn
+# ------------------------------------------------------------------------------
+WEB_CONCURRENCY=4
+
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+
+# Flower
+CELERY_FLOWER_USER=nGXINkmCvspVDzUfOEucwftugpVTemCd
+CELERY_FLOWER_PASSWORD=osd8qR88AI6KYuBqeNWOvPzpvXCGMpejUS3xQZMiPh7rfgZclcCS4ShgANdH8Jgx
+CELERY_BROKER_URL="${REDIS_URL}"

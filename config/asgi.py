@@ -23,12 +23,11 @@ sys.path.append(str(BASE_DIR / "dev_ops"))
 # If DJANGO_SETTINGS_MODULE is unset, default to the local settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 
-# This application object is used by any ASGI server configured to use this file.
-# django_application = get_asgi_application() ---- we won't use this as we don't have socket enabled
+# If your app don't use websocket use simple asgi application
 application = get_asgi_application()
-# Apply ASGI middleware here.
-# from helloworld.asgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
+# comment out code bellow this line to use websockets
+# This application object is used by any ASGI server configured to use this file.
+# django_application = get_asgi_application()
 
 # Import websocket application here, so apps from django_application are loaded first
 # from config.websocket import websocket_application
