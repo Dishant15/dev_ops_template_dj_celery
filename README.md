@@ -11,34 +11,63 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 
 ## Basic Commands
 
-- To start and stop local containers
+- view container logs
+  docker compose -f production.yml logs django -f --tail 100
 
-        docker-compose -f local.yml up
-        docker-compose -f local.yml down
+  use : --since=2m ; for logs of last 2 minutes, 1h for last 1 hour
+  --tail 100 ; for last 100 lines of logs
+
+- Use any container service name at the end: nginx | postgres | celeryworker
+
+- Connect to django server with shell
+  docker compose -f production.yml exec -it django bash
+
+- To start and stop containers
+
+  docker compose -f production.yml up -d
+  docker compose -f production.yml down
 
 - rebuild container after configuration / requirements / script changes
 
-        docker-compose -f local.yml up --build
-        docker-compose -f local.yml run --rm django python ./backend/manage.py shell
+  docker compose -f production.yml up --build
+  docker compose -f production.yml run --rm django python manage.py shell
 
 - Migration commands
 
-        docker-compose -f local.yml run --rm django python ./backend/manage.py makemigrations
-        docker-compose -f local.yml run --rm django python ./backend/manage.py migrate
+  docker compose -f production.yml run --rm django python manage.py makemigrations
+  docker compose -f production.yml run --rm django python manage.py migrate
+
+- Test django with pdb set trace
+  docker attach <django-container-id>
+
+- check space used by docker
+  docker system df
+
+- system runs out of space
+  docker system prune
+
+  Remove volumes as well
+  docker system prune --force --volumes
+
+  More info:
+  https://medium.com/@alexeysamoshkin/reclaim-disk-space-by-removing-stale-and-unused-docker-data-a4c3bd1e4001
 
 ## Database Backup
 
-        docker compose -f local.yml exec postgres backup
-
+- backup
+  docker compose -f production.yml exec postgres backup
 - view existing backups
-  docker compose -f local.yml exec postgres backups
+  docker compose -f production.yml exec postgres backups
 - restore backup
-  docker compose -f local.yml exec postgres restore backup_2018_03_13T09_05_07.sql.gz
+  docker compose -f production.yml exec postgres restore backup_2024_04_03T07_07_46.sql.gz
 
-- copy all backups locally
-  docker cp {container_id}:/backups ./backups
-- You can also get the container ID using
-  docker cp $(docker compose -f local.yml ps -q postgres):/backups ./backups
+## Move backups between servers
+
+- docker volume TO server file system
+  docker cp $(docker compose -f production.yml ps -q postgres):/backups ./backups
+- server file system To Docker volume
+  docker cp ./backups $(docker compose -f production.yml ps -q postgres):/backups
+
 - With a single backup file copied to . that would be
   docker cp {container_id}:/backups/backup_2018_03_13T09_05_07.sql.gz .
 
@@ -59,37 +88,6 @@ To run the tests, check your test coverage, and generate an HTML coverage report
 #### Running tests with pytest
 
     $ pytest
-
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
-cd dev_ops
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
-
-```bash
-cd dev_ops
-celery -A config.celery_app beat
-```
-
-or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
-
-```bash
-cd dev_ops
-celery -A config.celery_app worker -B -l info
-```
 
 ### Email Server
 

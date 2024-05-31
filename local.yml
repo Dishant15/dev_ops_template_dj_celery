@@ -1,5 +1,3 @@
-version: "3"
-
 volumes:
   dev_ops_local_postgres_data: {}
   dev_ops_local_postgres_data_backups: {}

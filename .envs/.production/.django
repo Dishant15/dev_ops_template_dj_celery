@@ -4,7 +4,11 @@
 DJANGO_SETTINGS_MODULE=config.settings.production
 DJANGO_SECRET_KEY=mHiDnf0ZLBG6TKl8hpn8xI8p03hMvPLT6RlHUzjEtCstvTBKB0FYGLm0hIUpAc7J
 DJANGO_ADMIN_URL=v2aF2xcliI1zyjqqrUy8pfv00xlkI7KQ/
+# comma separated domains ex.: 143.14.18.227,demo.example.com
 DJANGO_ALLOWED_HOSTS=*
+CSRF_TRUSTED_ORIGINS=*
+
+CONN_MAX_AGE=30
 
 # Security
 # ------------------------------------------------------------------------------
@@ -26,7 +30,7 @@ DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
 
 # Gunicorn
 # ------------------------------------------------------------------------------
-WEB_CONCURRENCY=4
+WEB_CONCURRENCY=1
 
 
 # Redis
