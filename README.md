@@ -17,7 +17,7 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
   use : --since=2m ; for logs of last 2 minutes, 1h for last 1 hour
   --tail 100 ; for last 100 lines of logs
 
-- Use any container service name at the end: nginx | postgres | celeryworker
+  Use any container service name at the end: nginx | postgres | celeryworker
 
 - Connect to django server with shell
   docker compose -f production.yml exec -it django bash
@@ -59,7 +59,9 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 - view existing backups
   docker compose -f production.yml exec postgres backups
 - restore backup
-  docker compose -f production.yml exec postgres restore backup_2024_04_03T07_07_46.sql.gz
+  docker compose -f production.yml exec postgres restore backup_name.sql.gz
+- remove backup
+  docker compose -f production.yml exec postgres rmbackup backup_name.sql.gz
 
 ## Move backups between servers
 
@@ -69,7 +71,29 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
   docker cp ./backups $(docker compose -f production.yml ps -q postgres):/backups
 
 - With a single backup file copied to . that would be
-  docker cp {container_id}:/backups/backup_2018_03_13T09_05_07.sql.gz .
+  docker cp {container_id}:/backups/backup_name.sql.gz .
+
+## Postgres commands (pgAdmin):
+
+- check max allowed connection
+
+```
+SHOW max_connections;
+```
+
+- get current connections
+
+```
+SELECT * FROM pg_stat_activity;
+```
+
+- Terminate idle connections that have been idle for more than 5 minutes
+
+```
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE state = 'idle' AND now() - state_change > interval '5 minutes';
+```
 
 ### Type checks
 
