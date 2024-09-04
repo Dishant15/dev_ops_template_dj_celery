@@ -1,5 +1,10 @@
 # Steps to setup new project with devops steps
 
+## Install docker
+
+- install_scripts -> docker_install.sh
+- delete install_scripts folder after use
+
 ## setup env variables
 
 ## copy paste config folder
