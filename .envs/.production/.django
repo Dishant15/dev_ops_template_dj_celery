@@ -5,10 +5,12 @@ DJANGO_SETTINGS_MODULE=config.settings.production
 DJANGO_SECRET_KEY=mHiDnf0ZLBG6TKl8hpn8xI8p03hMvPLT6RlHUzjEtCstvTBKB0FYGLm0hIUpAc7J
 DJANGO_ADMIN_URL=v2aF2xcliI1zyjqqrUy8pfv00xlkI7KQ/
 # comma separated domains ex.: 143.14.18.227,demo.example.com
-DJANGO_ALLOWED_HOSTS=*
-CSRF_TRUSTED_ORIGINS=*
+DJANGO_ALLOWED_HOSTS=localhost
+# comma separated full web addresses ex.: http://143.14.18.227,https://demo.example.com
+CSRF_TRUSTED_ORIGINS=http://0.0.0.0
+CORS_ALLOWED_ORIGINS=http://0.0.0.0
 
-CONN_MAX_AGE=30
+CONN_MAX_AGE=0
 
 # Security
 # ------------------------------------------------------------------------------
@@ -22,11 +24,6 @@ DJANGO_CSRF_COOKIE_SECURE=False
 # Email
 # ------------------------------------------------------------------------------
 DJANGO_SERVER_EMAIL=
-
-
-# django-allauth
-# ------------------------------------------------------------------------------
-DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
 
 # Gunicorn
 # ------------------------------------------------------------------------------
